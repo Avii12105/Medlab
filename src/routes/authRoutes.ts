@@ -35,7 +35,6 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
       { expiresIn: '7d' }
     );
 
-    // Return user info and token (without password)
     const response: LoginResponse = {
       id: user.id,
       username: user.username,
@@ -53,14 +52,6 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
     if (!username || !password) {
       return res.status(400).json({ error: 'Username and password are required' });
-    }
-
-    if (username.length < 3) {
-      return res.status(400).json({ error: 'Username must be at least 3 characters' });
-    }
-
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters' });
     }
 
     const existingUser = await userModel.findUserByUsername(username);

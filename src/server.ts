@@ -1,6 +1,5 @@
 import 'dotenv/config';
-import express, { Express, Request, Response, NextFunction } from 'express';
-import healthCheckRoutes from './routes/healthCheckRoutes';
+import express, { Express, Request, Response, NextFunction } from 'express';;
 import authRoutes from './routes/authRoutes';
 import patientRoutes from './routes/patientRoutes';
 import testCategoryRoutes from './routes/testCategoryRoutes';
@@ -24,8 +23,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Routes
-app.use(healthCheckRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/test-categories', testCategoryRoutes);
@@ -35,8 +32,8 @@ app.use('/api/reports', reportRoutes);
 const PORT: number = Number(process.env.PORT) || 3000;
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✓ Server running on http://0.0.0.0:${PORT}`);
-  console.log(`✓ Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
+  console.log(`Health check: http://0.0.0.0:${PORT}/health`);
 });
 
 server.on('error', (err: Error) => {

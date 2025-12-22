@@ -128,10 +128,8 @@ export const CreateReportPage: React.FC<CreateReportPageProps> = ({ onCancel, on
 
     setLoading(true);
     try {
-      // Create report
       const report = await apiService.createReport({ patient_id: selectedPatientId });
 
-      // Add report items
       for (const item of items) {
         await apiService.addReportItem(String(report.id), {
           test_id: item.test_id,
@@ -259,7 +257,6 @@ export const CreateReportPage: React.FC<CreateReportPageProps> = ({ onCancel, on
               </table>
             </div>
 
-            {/* Mobile/Tablet Cards */}
             <div className="lg:hidden space-y-3">
               {items.map((item, idx) => (
                 <div key={item.test_id} className="p-4 bg-gray-50 rounded-lg border relative">

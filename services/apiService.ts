@@ -2,7 +2,6 @@ import { supabase } from './supabaseClient';
 
 class APIService {
   private token: string | null = null;
-  // Resolve base URL from env (Vite), fallback to localhost
   private baseURL: string = (() => {
     const envUrl = (import.meta as any)?.env?.VITE_API_URL as string | undefined;
     const url = (envUrl && envUrl.trim()) || 'http://localhost:3000';
@@ -52,7 +51,6 @@ class APIService {
     return response.json();
   }
 
-  // Authentication with username/password
   async login(username: string, password: string) {
     const result = await this.fetch('/auth/login', {
       method: 'POST',
@@ -73,7 +71,6 @@ class APIService {
     return result;
   }
 
-  // Patients
   async getPatients() {
     const { data, error } = await supabase.from('patients').select('*').order('created_at', { ascending: false });
     if (error) throw error;
@@ -104,7 +101,6 @@ class APIService {
     return data;
   }
 
-  // Test Categories
   async getTestCategories() {
     const { data, error } = await supabase.from('test_categories').select('*').order('name', { ascending: true });
     if (error) throw error;
@@ -117,7 +113,6 @@ class APIService {
     return data[0];
   }
 
-  // Tests
   async getTests() {
     const { data, error } = await supabase.from('tests').select('*, test_categories(name)').order('created_at', { ascending: false });
     if (error) throw error;
@@ -142,7 +137,6 @@ class APIService {
     return data[0];
   }
 
-  // Reports
   async getReports() {
     const { data, error } = await supabase.from('reports').select('id, patient_id, patients(name), created_at').order('created_at', { ascending: false });
     if (error) throw error;
@@ -178,7 +172,6 @@ class APIService {
     return data;
   }
 
-  // Report Items
   async addReportItem(reportId: string, payload: any) {
     const { data, error } = await supabase.from('report_items').insert([{ report_id: reportId, ...payload }]).select();
     if (error) throw error;
